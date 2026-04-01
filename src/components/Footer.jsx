@@ -15,17 +15,9 @@ export default function Footer() {
   const handleSubscribe = async () => {
     if (!email) return;
     setIsSubmitting(true);
-    
     try {
-      const { error: dbError } = await supabase
-        .from('email_subscribers')
-        .insert([{ email }]);
-        
-      if (dbError) {
-        // Handle uniqueness constraint gracefully if they already subscribed
-        if (dbError.code !== '23505') throw dbError;
-      }
-      
+      const { error: dbError } = await supabase.from('email_subscribers').insert([{ email }]);
+      if (dbError && dbError.code !== '23505') throw dbError;
       setSub(true);
     } catch (err) {
       console.error('Newsletter error:', err);
@@ -35,7 +27,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gray-950 border-t border-gray-800">
+    <footer className="bg-gray-900 dark:bg-[#080808] text-white border-t border-gray-800 dark:border-gray-900">
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-12">
@@ -43,13 +35,13 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-8 h-8 bg-orange-500 rounded-sm flex items-center justify-center font-black text-white text-sm">P</div>
-              <span className="font-display font-black text-lg">
+              <span className="font-black text-lg">
                 <span className="text-white">Pro</span>
-                <span className="text-red-500"> Concrete</span>
-                <span className="text-yellow-400"> Sealer</span>
+                <span className="text-orange-500"> Concrete</span>
+                <span className="text-gray-300"> Sealer</span>
               </span>
             </div>
-            <p className="text-gray-500 text-sm leading-relaxed mb-6 max-w-xs">
+            <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xs">
               Professional-grade concrete sealing and surface protection services. Serving residential and commercial clients since 2014.
             </p>
 
@@ -65,12 +57,12 @@ export default function Footer() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-red-500 transition-colors"
+                    className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-orange-500 transition-colors"
                   />
                   <button
                     disabled={isSubmitting}
                     onClick={handleSubscribe}
-                    className="bg-orange-500 text-white font-black px-4 py-2 rounded-lg text-xs uppercase hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center min-w-[40px]"
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-black px-4 py-2 rounded-lg text-xs uppercase transition disabled:opacity-50 min-w-[40px] flex items-center justify-center"
                   >
                     {isSubmitting ? '...' : '→'}
                   </button>
@@ -82,7 +74,7 @@ export default function Footer() {
           {/* Links */}
           {Object.entries(footerLinks).map(([section, links]) => (
             <div key={section}>
-              <h4 className="font-bold text-white text-sm uppercase tracking-widest mb-5">{section}</h4>
+              <h4 className="font-black text-white text-sm uppercase tracking-widest mb-5">{section}</h4>
               <ul className="space-y-3">
                 {links.map(link => {
                   const toLower = link.toLowerCase();
@@ -91,7 +83,6 @@ export default function Footer() {
                   else if (toLower.includes("project")) href = "#projects";
                   else if (toLower.includes("quote") || toLower.includes("contact")) href = "#contact";
                   else if (toLower.includes("service")) href = "#services";
-
                   return (
                     <li key={link}>
                       <a href={href} className="text-gray-500 hover:text-orange-400 text-sm transition-colors">

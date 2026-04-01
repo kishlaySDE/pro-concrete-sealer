@@ -1,53 +1,63 @@
 const clients = [
-  "HomeDepot Partner",
-  "BuildRight Co.",
-  "UrbanSpace LLC",
-  "CityPave Inc.",
-  "GroundWorks",
-  "MetroBuild",
-  "SteelFrame Corp",
-  "UrbanLiving",
+  { name: "MetroBuild", abbr: "MB" },
+  { name: "SteelFrame Corp", abbr: "SF" },
+  { name: "UrbanLiving", abbr: "UL" },
+  { name: "HomeDepot Partner", abbr: "HD" },
+  { name: "BuildRight Co.", abbr: "BR" },
+  { name: "CityPave Inc.", abbr: "CP" },
+  { name: "GroundWorks", abbr: "GW" },
+  { name: "ProSeal Alliance", abbr: "PS" },
 ];
 
 export default function TrustedBy() {
+  const all = [...clients, ...clients, ...clients];
+
   return (
-    <section className="w-full bg-black border-y border-gray-800 py-10 overflow-hidden">
+    <section className="w-full overflow-hidden bg-[#1a1a2e] dark:bg-[#050510]" style={{ borderBottom: "3px solid #f97316" }}>
 
       {/* Heading */}
-      <p className="text-center text-gray-400 text-xs uppercase tracking-widest font-bold mb-8">
-        Trusted by Leading Companies
+      <p className="text-center text-white text-base font-semibold py-5 tracking-wide">
+        Our Brand Work for
       </p>
 
-      {/* Slider */}
-      <div className="relative w-full overflow-hidden">
+      {/* Divider */}
+      <div className="w-full h-px bg-gray-700/50" />
 
-        <div className="flex w-max animate-scroll gap-10 px-6">
+      {/* Slider track */}
+      <div className="relative w-full overflow-hidden py-5">
+        {/* Edge fades */}
+        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#1a1a2e] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#1a1a2e] to-transparent z-10 pointer-events-none" />
 
-          {[...clients, ...clients].map((c, i) => (
+        <div className="flex w-max animate-trusted gap-5">
+          {all.map((c, i) => (
             <div
               key={i}
-              className="bg-white/90 text-black rounded-xl px-6 py-3 flex items-center gap-2 font-semibold text-sm uppercase tracking-wide min-w-[200px] justify-center shadow-md"
+              className="bg-white rounded-xl flex items-center gap-3 px-6 py-4 shrink-0 shadow-lg"
+              style={{ minWidth: 180 }}
             >
-              <span className="w-2 h-2 rounded-full bg-orange-500" />
-              {c}
+              {/* Letter logo placeholder */}
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center text-white font-black text-sm shrink-0"
+                style={{ background: `hsl(${(i * 47) % 360}, 60%, 45%)` }}
+              >
+                {c.abbr}
+              </div>
+              <span className="text-gray-800 font-bold text-sm leading-tight">{c.name}</span>
             </div>
           ))}
-
         </div>
       </div>
 
-      {/* Animation */}
       <style>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+        @keyframes trusted {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(calc(-33.333% - 7px)); }
         }
-
-        .animate-scroll {
-          animation: scroll 25s linear infinite;
+        .animate-trusted {
+          animation: trusted 28s linear infinite;
         }
-
-        .animate-scroll:hover {
+        .animate-trusted:hover {
           animation-play-state: paused;
         }
       `}</style>

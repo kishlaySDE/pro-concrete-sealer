@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import TrustedBy from "./components/TrustedBy";
@@ -19,22 +20,24 @@ export default function App() {
   }, []);
 
   return (
-    <div className="font-body bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-gray-950 to-black text-white overflow-x-hidden">
-      <Navbar />
-      <main>
-        <Hero />
-        <TrustedBy />
-        <Services />
-        <Methods />
-        <WhoWeHelp />
-        <Process />
-        <Industries />
-        <Trust />
-        <FAQ />
-        <Blog />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div className="font-body overflow-x-hidden bg-white dark:bg-[#0d0d0d] text-gray-900 dark:text-white transition-colors duration-300">
+        <Navbar />
+        <main>
+          <Hero />
+          <TrustedBy />
+          <Services />
+          <Methods />
+          <WhoWeHelp />
+          <Process />
+          <Industries />
+          <Trust />
+          <FAQ />
+          <Blog />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
