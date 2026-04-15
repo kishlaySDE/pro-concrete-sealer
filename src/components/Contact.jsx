@@ -4,7 +4,7 @@ import { staggerContainer, fadeInUp, floatIn } from "../utils/animations";
 import { supabase } from "../lib/supabase";
 
 const locations = [
-  { flag: "🇨🇦", country: "Canada", city: "Toronto, Ontario", phone: "+1 (825) 889-0005", email: "nehalconstruction780@gmail.com" },
+  { flag: "🇨🇦", country: "Canada", city: "Edmonton, Alberta", phone: "+1 (825) 889-0005", email: "Prosealer780@gmail.com" },
 ];
 
 export default function Contact() {
@@ -71,7 +71,7 @@ export default function Contact() {
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-gray-700 dark:text-gray-300 text-xs font-black uppercase tracking-widest mb-2">Full Name *</label>
-                    <input required type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Kishlay Raj"
+                    <input required type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Your Name"
                       className="w-full bg-white dark:bg-[#1e1e1e] border-2 border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-gray-900 dark:text-white text-sm placeholder:text-gray-400 focus:outline-none focus:border-orange-500 transition-colors" />
                   </div>
                   <div>
