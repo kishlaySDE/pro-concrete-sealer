@@ -68,6 +68,11 @@ export default function Contact() {
           project_description: form.message,
           description: form.message,
           time: formattedTime,
+          submitted_on: formattedTime,
+          submittedOn: formattedTime,
+          submittedAt: formattedTime,
+          submission_time: formattedTime,
+          submissionTime: formattedTime,
         };
         console.log('Sending email with params:', templateParams);
         const result = await emailjs.send(
