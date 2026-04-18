@@ -33,8 +33,12 @@ export default function Contact() {
         const templateParams = {
           from_name: form.name,
           user_name: form.name,
+          customer_name: form.name,
+          name: form.name,
           from_email: form.email,
           user_email: form.email,
+          customer_email: form.email,
+          email: form.email,
           reply_to: form.email,
           to_email: form.email,
           phone: form.phone,
