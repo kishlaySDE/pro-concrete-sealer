@@ -30,6 +30,20 @@ export default function Contact() {
 
       // Send email via EmailJS
       try {
+        // Format current date and time in Edmonton timezone
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'America/Edmonton',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+          timeZoneName: 'short'
+        });
+        const formattedTime = formatter.format(now) + ' (Canada)';
+
         const templateParams = {
           from_name: form.name,
           user_name: form.name,
@@ -53,6 +67,7 @@ export default function Contact() {
           project_details: form.message,
           project_description: form.message,
           description: form.message,
+          time: formattedTime,
         };
         console.log('Sending email with params:', templateParams);
         const result = await emailjs.send(
