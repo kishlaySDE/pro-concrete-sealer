@@ -4,8 +4,9 @@ import { staggerContainer, fadeInUp, floatIn } from "../utils/animations";
 import { supabase } from "../lib/supabase";
 import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS
-emailjs.init('QReouiaQymcMUwE2P....');
+const EMAILJS_SERVICE_ID = 'service_jilb7dp';
+const EMAILJS_TEMPLATE_ID = 'template_3rjazye';
+const EMAILJS_PUBLIC_KEY = 'CLwZsIveFYkQ6GzxsRuqg';
 
 const locations = [
   { flag: "🇨🇦", country: "Canada", city: "Edmonton, Alberta", phone: "+1 (825) 889-0005", email: "Prosealer780@gmail.com" },
@@ -28,18 +29,19 @@ export default function Contact() {
       // Send email via EmailJS
       try {
         await emailjs.send(
-          'service_jilb7dp',
-          'template_3rjazye',
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
           {
             from_name: form.name,
             from_email: form.email,
             phone: form.phone,
             message: form.message,
-          }
+          },
+          EMAILJS_PUBLIC_KEY
         );
       } catch (emailError) {
         console.error('Email sending failed:', emailError);
-        // Don't throw error, as data is saved
+        setError('Quote request saved, but email failed to send. Check the console for details.');
       }
 
       setSent(true);
