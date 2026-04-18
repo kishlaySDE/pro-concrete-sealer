@@ -28,7 +28,13 @@ export default function Contact() {
 
       // Send email via EmailJS
       try {
-        await emailjs.send(
+        console.log('Sending email with params:', {
+          from_name: form.name,
+          from_email: form.email,
+          phone: form.phone,
+          message: form.message,
+        });
+        const result = await emailjs.send(
           EMAILJS_SERVICE_ID,
           EMAILJS_TEMPLATE_ID,
           {
@@ -39,9 +45,10 @@ export default function Contact() {
           },
           EMAILJS_PUBLIC_KEY
         );
+        console.log('Email sent successfully:', result);
       } catch (emailError) {
         console.error('Email sending failed:', emailError);
-        setError('Quote request saved, but email failed to send. Check the console for details.');
+        setError(`Quote request saved, but email failed to send: ${emailError.text || emailError.message}`);
       }
 
       setSent(true);
