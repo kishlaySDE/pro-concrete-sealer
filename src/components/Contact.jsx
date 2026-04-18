@@ -8,6 +8,8 @@ const EMAILJS_SERVICE_ID = 'service_jilb7dp';
 const EMAILJS_TEMPLATE_ID = 'template_3rjazye';
 const EMAILJS_PUBLIC_KEY = 'CLwZsIveFYkQ6GzxsRuqg';
 
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
 const locations = [
   { flag: "🇨🇦", country: "Canada", city: "Edmonton, Alberta", phone: "+1 (825) 889-0005", email: "Prosealer780@gmail.com" },
 ];
@@ -28,22 +30,21 @@ export default function Contact() {
 
       // Send email via EmailJS
       try {
-        console.log('Sending email with params:', {
+        const templateParams = {
           from_name: form.name,
+          user_name: form.name,
           from_email: form.email,
+          user_email: form.email,
+          reply_to: form.email,
+          to_email: form.email,
           phone: form.phone,
           message: form.message,
-        });
+        };
+        console.log('Sending email with params:', templateParams);
         const result = await emailjs.send(
           EMAILJS_SERVICE_ID,
           EMAILJS_TEMPLATE_ID,
-          {
-            from_name: form.name,
-            from_email: form.email,
-            phone: form.phone,
-            message: form.message,
-          },
-          EMAILJS_PUBLIC_KEY
+          templateParams
         );
         console.log('Email sent successfully:', result);
       } catch (emailError) {
