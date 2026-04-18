@@ -2,6 +2,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp, floatIn } from "../utils/animations";
 import { supabase } from "../lib/supabase";
+import emailjs from '@emailjs/browser';
+
+// Initialize EmailJS
+emailjs.init('QReouiaQymcMUwE2P....');
 
 const locations = [
   { flag: "🇨🇦", country: "Canada", city: "Edmonton, Alberta", phone: "+1 (825) 889-0005", email: "Prosealer780@gmail.com" },
@@ -20,6 +24,24 @@ export default function Contact() {
     try {
       const { error: dbError } = await supabase.from('quote_requests').insert([{ full_name: form.name, phone: form.phone, email: form.email, message: form.message }]);
       if (dbError) throw dbError;
+
+      // Send email via EmailJS
+      try {
+        await emailjs.send(
+          'service_jilb7dp',
+          'template_3rjazye',
+          {
+            from_name: form.name,
+            from_email: form.email,
+            phone: form.phone,
+            message: form.message,
+          }
+        );
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError);
+        // Don't throw error, as data is saved
+      }
+
       setSent(true);
     } catch (err) {
       console.error('Error submitting form:', err);
